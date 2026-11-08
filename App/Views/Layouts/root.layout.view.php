@@ -5,15 +5,19 @@
 /** @var \Framework\Support\LinkGenerator $link */
 
 /*
- * Router frameworku určuje aktuálnu akciu pomocou GET parametra "a".
- * Ak parameter chýba, ide o predvolenú akciu index(), teda domovskú stránku.
- * Hodnota $currentAction sa používa na vizuálne označenie aktívneho odkazu
- * triedou "active" a na nastavenie atribútu aria-current pre prístupnosť.
+ * Router frameworku určuje aktuálny kontrolér a akciu pomocou GET parametrov
+ * "c" a "a". Ak parameter "c" chýba, použije sa predvolený kontrolér "home".
+ * Ak parameter "a" chýba, použije sa predvolená akcia "index".
+ *
+ * Hodnoty $currentController a $currentAction sa používajú na vizuálne
+ * označenie aktuálnej stránky v navigácii triedou "active" a atribútom
+ * aria-current="page".
  */
+$currentController = strtolower($_GET['c'] ?? 'home');
 $currentAction = $_GET['a'] ?? 'index';
 ?>
 <!DOCTYPE html>
-<html lang="sk">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,17 +47,24 @@ $currentAction = $_GET['a'] ?? 'index';
         </a>
         <nav class="primary-nav" aria-label="Main navigation">
 <!--            <a class="nav-link active" href="--><?php //= $link->url('home.index') ?><!--" aria-current="page">Home</a>-->
-<!--            <a class="nav-link" href="--><?php //= $link->url('home.games') ?><!--">Game Catalog</a>-->
-            <a class="nav-link <?= $currentAction === 'index' ? 'active' : '' ?>"
+<!--            <a class="nav-link" href="--><?php //= $link->url('game.index') ?><!--">Game Catalog</a>-->
+<!--            <a class="nav-link" href="--><?php //= $link->url('game.manage') ?><!--">Manage Games</a>-->
+            <a class="nav-link <?= $currentController === 'home' && $currentAction === 'index' ? 'active' : '' ?>"
                href="<?= $link->url('home.index') ?>"
-                    <?= $currentAction === 'index' ? 'aria-current="page"' : '' ?>>
+                    <?= $currentController === 'home' && $currentAction === 'index' ? 'aria-current="page"' : '' ?>>
                 Home
             </a>
 
-            <a class="nav-link <?= $currentAction === 'games' ? 'active' : '' ?>"
-               href="<?= $link->url('home.games') ?>"
-                    <?= $currentAction === 'games' ? 'aria-current="page"' : '' ?>>
+            <a class="nav-link <?= $currentController === 'game' && $currentAction === 'index' ? 'active' : '' ?>"
+               href="<?= $link->url('game.index') ?>"
+                    <?= $currentController === 'game' && $currentAction === 'index' ? 'aria-current="page"' : '' ?>>
                 Game Catalog
+            </a>
+
+            <a class="nav-link <?= $currentController === 'game' && $currentAction === 'manage' ? 'active' : '' ?>"
+               href="<?= $link->url('game.manage') ?>"
+                    <?= $currentController === 'game' && $currentAction === 'manage' ? 'aria-current="page"' : '' ?>>
+                Manage Games
             </a>
 
 <!--            <a class="nav-link" aria-disabled="true">My Library</a>-->

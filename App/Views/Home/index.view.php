@@ -1,6 +1,7 @@
 <?php
 
 /** @var \Framework\Support\LinkGenerator $link */
+/** @var \App\Models\Game[] $recentGames */
 ?>
 
 <main id="main-content" class="page-shell">
@@ -20,10 +21,13 @@
             <div><p class="eyebrow">RECENTLY ADDED GAMES</p><h2 id="recent-title">Fresh into the Vault</h2></div>
             <a class="text-link" href="<?= $link->url('home.games') ?>">Browse all games <span aria-hidden="true">→</span></a>
         </div>
-        <div class="game-grid home-game-grid">
-            <article class="game-card">
-                <div class="cover-wrap">
-                    <img class="game-cover-image" src="<?= $link->asset('images/games/silent-hill-townfall.jpg') ?>" alt="Silent Hill: Townfall cover art">
+<!--        <div class="game-grid home-game-grid">-->
+<!--            <article class="game-card">-->
+<!--                <div class="cover-wrap">-->
+<!--                    <img class="game-cover-image" src="--><?php //= $link->asset('images/games/silent-hill-townfall.jpg') ?><!--" alt="Silent Hill: Townfall cover art">-->
+
+
+<!--                    TROJBODKOVE MENU:-->
 <!--                    <div class="game-actions">-->
 <!--                        <button class="game-actions-toggle" type="button" aria-label="Actions for game placeholder 1" aria-haspopup="menu" aria-expanded="false">-->
 <!--                            <span aria-hidden="true">⋮</span>-->
@@ -33,59 +37,38 @@
 <!--                            <button class="game-action-option" type="button" role="menuitem" data-game-action="wishlist">Add to Wishlist</button>-->
 <!--                        </div>-->
 <!--                    </div>-->
-                </div>
-                <div class="game-card-info">
-                    <div>
-                        <h3><a aria-disabled="true" id="game-1">Silent Hill: Townfall</a></h3>
-                        <p class="game-meta">Horror · Survival</p>
-                        <p class="game-year">2026</p>
+
+
+<!--                </div>-->
+<!--                <div class="game-card-info">-->
+<!--                    <div>-->
+<!--                        <h3><a aria-disabled="true" id="game-1">Silent Hill: Townfall</a></h3>-->
+<!--                        <p class="game-meta">Horror · Survival</p>-->
+<!--                        <p class="game-year">2026</p>-->
+<!--                    </div>-->
+<!--                    <span class="rating"><span aria-hidden="true">★</span> 8.1</span>-->
+<!--                </div>-->
+<!--                <div class="game-card-footer"><span>PC · PlayStation</span><span class="tag">New</span></div>-->
+<!--            </article>-->
+
+        <div class="game-grid home-game-grid">
+            <?php foreach ($recentGames as $game): ?>
+                <article class="game-card">
+                    <div class="cover-wrap">
+                        <?php if ($game->getCoverImage()): ?>
+                            <img class="game-cover-image" src="<?= $link->asset('images/games/' . $game->getCoverImage()) ?>" alt="<?= htmlspecialchars($game->getTitle(), ENT_QUOTES, 'UTF-8') ?> cover art">
+                        <?php endif; ?>
                     </div>
-                    <span class="rating"><span aria-hidden="true">★</span> 8.1</span>
-                </div>
-                <div class="game-card-footer"><span>PC · PlayStation</span><span class="tag">New</span></div>
-            </article>
-            <article class="game-card">
-                <div class="cover-wrap">
-                    <img class="game-cover-image" src="<?= $link->asset('images/games/hades-2.jpg') ?>" alt="Hades 2 cover art">
-                </div>
-                <div class="game-card-info">
-                    <div>
-                        <h3><a aria-disabled="true" id="game-2">Hades 2</a></h3>
-                        <p class="game-meta">Roguelike · Action · RPG</p>
-                        <p class="game-year">2025</p>
+                    <div class="game-card-info">
+                        <div>
+                            <h3><?= htmlspecialchars($game->getTitle(), ENT_QUOTES, 'UTF-8') ?></h3>
+                            <?php if ($game->getDeveloper()): ?><p class="game-meta"><?= htmlspecialchars($game->getDeveloper(), ENT_QUOTES, 'UTF-8') ?></p><?php endif; ?>
+                            <?php if ($game->getReleaseDate()): ?><p class="game-year"><?= htmlspecialchars($game->getReleaseDate(), ENT_QUOTES, 'UTF-8') ?></p><?php endif; ?>
+                        </div>
                     </div>
-                    <span class="rating"><span aria-hidden="true">★</span> 9.2</span>
-                </div>
-                <div class="game-card-footer"><span>PC · PlayStation · Xbox · Nintendo Switch</span><span class="tag">Indie</span></div>
-            </article>
-            <article class="game-card">
-                <div class="cover-wrap">
-                    <img class="game-cover-image" src="<?= $link->asset('images/games/kcd2.jpg') ?>" alt="Kingdom Come: Deliverance II cover art">
-                </div>
-                <div class="game-card-info">
-                    <div>
-                        <h3><a aria-disabled="true" id="game-3">Kingdom Come: Deliverance II</a></h3>
-                        <p class="game-meta">RPG · Action</p>
-                        <p class="game-year">2025</p>
-                    </div>
-                    <span class="rating"><span aria-hidden="true">★</span> 8.8</span>
-                </div>
-                <div class="game-card-footer"><span>PC · PlayStation · Xbox</span><span class="tag">Popular</span></div>
-            </article>
-            <article class="game-card">
-                <div class="cover-wrap">
-                    <img class="game-cover-image" src="<?= $link->asset('images/games/gow-ragnarok.jpg') ?>" alt="God of War Ragnarök cover art">
-                </div>
-                <div class="game-card-info">
-                    <div>
-                        <h3><a aria-disabled="true" id="game-4">God of War Ragnarök</a></h3>
-                        <p class="game-meta">Action · Adventure</p>
-                        <p class="game-year">2022</p>
-                    </div>
-                    <span class="rating"><span aria-hidden="true">★</span> 9.0</span>
-                </div>
-                <div class="game-card-footer"><span>PC · PlayStation</span><span class="tag">Popular</span></div>
-            </article>
+                    <?php if ($game->getPublisher()): ?><div class="game-card-footer"><span><?= htmlspecialchars($game->getPublisher(), ENT_QUOTES, 'UTF-8') ?></span><span class="tag">New</span></div><?php endif; ?>
+                </article>
+            <?php endforeach; ?>
         </div>
     </section>
 

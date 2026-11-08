@@ -5,6 +5,7 @@ namespace App\Controllers;
 use Framework\Core\BaseController;
 use Framework\Http\Request;
 use Framework\Http\Responses\Response;
+use App\Models\Game;
 
 /**
  * Class HomeController
@@ -39,7 +40,8 @@ class HomeController extends BaseController
      */
     public function index(Request $request): Response
     {
-        return $this->html();
+        $recentGames = Game::getAll(null, [], 'added_at DESC', 4);
+        return $this->html(['recentGames' => $recentGames]);
     }
 
     /**
@@ -51,19 +53,6 @@ class HomeController extends BaseController
      * @return Response The response object containing the rendered HTML for the contact page.
      */
     public function contact(Request $request): Response
-    {
-        return $this->html();
-    }
-
-    /**
-     * Displays the game catalog page.
-     *
-     * The catalog content is rendered in the Home/games view and wrapped
-     * by the common root layout.
-     *
-     * @return Response The response containing the rendered game catalog.
-     */
-    public function games(Request $request): Response
     {
         return $this->html();
     }
