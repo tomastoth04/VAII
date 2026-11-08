@@ -15,8 +15,16 @@
 
     <form class="catalog-toolbar" action="<?= $link->url('game.index') ?>" method="get" role="search">
         <input type="hidden" name="c" value="game">
-        <label class="search-field"><span class="search-icon" aria-hidden="true">⌕</span><span class="visually-hidden">Search games</span><input type="search" name="q" placeholder="Search by game title..." autocomplete="off"></label>
-        <label class="sort-field"><span>Sort by</span><select name="sort"><option>Most popular</option><option>Top rated</option><option>Recently added</option><option>Title A–Z</option></select></label>
+        <label class="search-field">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <span class="visually-hidden">Search games</span>
+            <input type="search" name="q" placeholder="Search by game title..." autocomplete="off">
+        </label>
+        <label class="sort-field">
+            <span>Sort by</span>
+            <select name="sort"><option>Most popular</option><option>Top rated</option><option>Recently added</option><option>Title A–Z</option>
+            </select>
+        </label>
         <button class="button button-primary" type="submit">Search</button>
     </form>
 
@@ -55,21 +63,42 @@
         </aside>
 
         <section class="results-section" aria-labelledby="results-title">
-            <div class="results-heading"><div><h2 id="results-title">Explore games</h2><p>Showing <strong><?= count($games) ?></strong> games</p></div><span class="results-view-label"><span class="view-grid-icon" aria-hidden="true">▪</span> All games</span></div>
+            <div class="results-heading">
+                <div>
+                    <h2 id="results-title">Explore games</h2>
+                    <p>Showing <strong><?= count($games) ?></strong> games</p>
+                </div>
+                <span class="results-view-label"><span class="view-grid-icon" aria-hidden="true">▪</span> All games</span>
+            </div>
             <div class="game-grid catalog-game-grid">
-                <?php foreach ($games as $game): ?>
+                <?php foreach ($games as $game) : ?>
                     <article class="game-card">
                         <div class="cover-wrap">
-                            <?php if ($game->getCoverImage()): ?>
-                                <img class="game-cover-image" src="<?= $link->asset('images/games/' . $game->getCoverImage()) ?>" alt="<?= htmlspecialchars($game->getTitle()) ?> cover art">
+                            <?php if ($game->getCoverImage()) : ?>
+                                <img class="game-cover-image"
+                                     src="<?= $link->asset('images/games/' . $game->getCoverImage()) ?>"
+                                     alt="<?= htmlspecialchars($game->getTitle()) ?> cover art">
                             <?php endif; ?>
                         </div>
                         <div class="game-card-info"><div>
                             <h3><?= htmlspecialchars($game->getTitle()) ?></h3>
-                            <?php if ($game->getDeveloper()): ?><p class="game-meta"><?= htmlspecialchars($game->getDeveloper()) ?></p><?php endif; ?>
-                            <?php if ($game->getReleaseDate()): ?><p class="game-year"><?= htmlspecialchars($game->getReleaseDate()) ?></p><?php endif; ?>
+                            <?php if ($game->getDeveloper()) : ?>
+                                <p class="game-meta">
+                                    <?= htmlspecialchars($game->getDeveloper()) ?>
+                                </p>
+                            <?php endif; ?>
+
+                            <?php if ($game->getReleaseDate()) : ?>
+                                <p class="game-year">
+                                    <?= htmlspecialchars($game->getReleaseDate()) ?>
+                                </p>
+                            <?php endif; ?>
                         </div></div>
-                        <?php if ($game->getPublisher()): ?><div class="game-card-footer"><span><?= htmlspecialchars($game->getPublisher()) ?></span></div><?php endif; ?>
+                        <?php if ($game->getPublisher()) : ?>
+                            <div class="game-card-footer">
+                                <span><?= htmlspecialchars($game->getPublisher()) ?></span>
+                            </div>
+                        <?php endif; ?>
                     </article>
                 <?php endforeach; ?>
             </div>

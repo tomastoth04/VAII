@@ -52,21 +52,37 @@
 <!--            </article>-->
 
         <div class="game-grid home-game-grid">
-            <?php foreach ($recentGames as $game): ?>
+            <?php foreach ($recentGames as $game) : ?>
                 <article class="game-card">
                     <div class="cover-wrap">
-                        <?php if ($game->getCoverImage()): ?>
-                            <img class="game-cover-image" src="<?= $link->asset('images/games/' . $game->getCoverImage()) ?>" alt="<?= htmlspecialchars($game->getTitle(), ENT_QUOTES, 'UTF-8') ?> cover art">
+                        <?php if ($game->getCoverImage()) : ?>
+                            <img class="game-cover-image"
+                                 src="<?= $link->asset('images/games/' . $game->getCoverImage()) ?>"
+                                 alt="<?= htmlspecialchars($game->getTitle(), ENT_QUOTES, 'UTF-8') ?> cover art">
                         <?php endif; ?>
                     </div>
                     <div class="game-card-info">
                         <div>
                             <h3><?= htmlspecialchars($game->getTitle(), ENT_QUOTES, 'UTF-8') ?></h3>
-                            <?php if ($game->getDeveloper()): ?><p class="game-meta"><?= htmlspecialchars($game->getDeveloper(), ENT_QUOTES, 'UTF-8') ?></p><?php endif; ?>
-                            <?php if ($game->getReleaseDate()): ?><p class="game-year"><?= htmlspecialchars($game->getReleaseDate(), ENT_QUOTES, 'UTF-8') ?></p><?php endif; ?>
+                            <?php if ($game->getDeveloper()) : ?>
+                                <p class="game-meta">
+                                    <?= htmlspecialchars($game->getDeveloper(), ENT_QUOTES, 'UTF-8') ?>
+                                </p>
+                            <?php endif; ?>
+
+                            <?php if ($game->getReleaseDate()) : ?>
+                                <p class="game-year">
+                                    <?= htmlspecialchars($game->getReleaseDate(), ENT_QUOTES, 'UTF-8') ?>
+                                </p>
+                            <?php endif; ?>
                         </div>
                     </div>
-                    <?php if ($game->getPublisher()): ?><div class="game-card-footer"><span><?= htmlspecialchars($game->getPublisher(), ENT_QUOTES, 'UTF-8') ?></span><span class="tag">New</span></div><?php endif; ?>
+                    <?php if ($game->getPublisher()) : ?>
+                        <div class="game-card-footer">
+                            <span><?= htmlspecialchars($game->getPublisher(), ENT_QUOTES, 'UTF-8') ?></span>
+                            <span class="tag">New</span>
+                        </div>
+                    <?php endif; ?>
                 </article>
             <?php endforeach; ?>
         </div>

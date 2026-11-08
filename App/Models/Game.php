@@ -94,6 +94,4 @@ class Game extends Model
     {
         $this->added_at = $addedAt;
     }
-
-
 }

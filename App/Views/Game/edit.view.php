@@ -15,7 +15,7 @@
         <div class="game-form-panel">
             <div class="game-card edit-game-preview">
                 <div class="cover-wrap">
-                    <?php if ($game->getCoverImage()): ?>
+                    <?php if ($game->getCoverImage()) : ?>
                         <img class="game-cover-image"
                              src="<?= $link->asset('images/games/' . $game->getCoverImage()) ?>"
                              alt="<?= htmlspecialchars($game->getTitle(), ENT_QUOTES, 'UTF-8') ?> cover art">
@@ -24,15 +24,15 @@
                 <div class="game-card-info">
                     <div>
                         <h3><?= htmlspecialchars($game->getTitle(), ENT_QUOTES, 'UTF-8') ?></h3>
-                        <?php if ($game->getDeveloper()): ?>
+                        <?php if ($game->getDeveloper()) : ?>
                             <p class="game-meta"><?= htmlspecialchars($game->getDeveloper(), ENT_QUOTES, 'UTF-8') ?></p>
                         <?php endif; ?>
-                        <?php if ($game->getReleaseDate()): ?>
+                        <?php if ($game->getReleaseDate()) : ?>
                             <p class="game-year"><?= htmlspecialchars($game->getReleaseDate(), ENT_QUOTES, 'UTF-8') ?></p>
                         <?php endif; ?>
                     </div>
                 </div>
-                <?php if ($game->getPublisher()): ?>
+                <?php if ($game->getPublisher()) : ?>
                     <div class="game-card-footer">
                         <span><?= htmlspecialchars($game->getPublisher(), ENT_QUOTES, 'UTF-8') ?></span>
                     </div>
@@ -50,7 +50,9 @@
 
                 <div class="game-form-field">
                     <label for="description">Description</label>
-                    <textarea id="description" name="description" rows="5"><?= htmlspecialchars($game->getDescription() ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
+                    <textarea id="description" name="description" rows="5">
+                        <?= htmlspecialchars($game->getDescription() ?? '', ENT_QUOTES, 'UTF-8') ?>
+                    </textarea>
                 </div>
 
                 <div class="game-form-field">

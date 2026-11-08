@@ -13,13 +13,13 @@
             <a class="button button-primary" href="<?= $link->url('game.add') ?>">+ Add game</a>
         </div>
 
-    <?php if (empty($games)): ?>
+    <?php if (empty($games)) : ?>
         <section class="section-block">
             <h2>No games found</h2>
             <p class="hero-description">Your catalog is empty. Add the first game to get started.</p>
             <a class="button button-primary" href="<?= $link->url('game.add') ?>">+ Add game</a>
         </section>
-    <?php else: ?>
+    <?php else : ?>
         <section aria-labelledby="game-list-title">
             <div class="results-heading">
                 <div>
@@ -29,13 +29,13 @@
             </div>
 
             <div style="border-top: 1px solid var(--line);">
-                <?php foreach ($games as $game): ?>
+                <?php foreach ($games as $game) : ?>
                     <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 17px 0; border-bottom: 1px solid var(--line);">
                         <div style="min-width: 0;">
                             <h3 style="margin: 0 0 4px; font-size: 1rem;">
                                 <?= htmlspecialchars($game->getTitle(), ENT_QUOTES, 'UTF-8') ?>
                             </h3>
-                            <?php if ($game->getDeveloper()): ?>
+                            <?php if ($game->getDeveloper()) : ?>
                                 <p class="game-meta" style="margin: 0;">
                                     <?= htmlspecialchars($game->getDeveloper(), ENT_QUOTES, 'UTF-8') ?>
                                 </p>
