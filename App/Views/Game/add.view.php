@@ -59,7 +59,7 @@
             <div class="game-form-field">
                 <label>Genres</label>
                     <div class="genre-checkboxes">
-                        <?php foreach ($genres as $genre): ?>
+                        <?php foreach ($genres as $genre) : ?>
                             <label>
                                 <input
                                     type="checkbox"
