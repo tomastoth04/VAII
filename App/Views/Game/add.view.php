@@ -2,6 +2,8 @@
 
 /** @var \App\Models\Game $game */
 /** @var \Framework\Support\LinkGenerator $link */
+/** @var \App\Models\Genre[] $genres */
+/** @var int[] $selectedGenreIds */
 ?>
 
 <main id="main-content" class="page-shell">
@@ -54,9 +56,27 @@
                        placeholder="For example, cyberpunk.jpg">
             </div>
 
+            <div class="game-form-field">
+                <label>Genres</label>
+                    <div class="genre-checkboxes">
+                        <?php foreach ($genres as $genre): ?>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    name="genres[]"
+                                    value="<?= $genre->getId() ?>"
+                                    <?= in_array($genre->getId(), $selectedGenreIds) ? 'checked' : '' ?>
+                                    <!-- This line checks if the genre is selected and adds the 'checked' attribute accordingly -->
+                                >
+                                <span><?= htmlspecialchars($genre->getName(), ENT_QUOTES, 'UTF-8') ?></span>
+                            </label>
+                        <?php endforeach; ?>
+                    </div>
+            </div>
+
             <div class="game-form-actions">
-                <a href="<?= $link->url('game.index') ?>" class="button button-outline">Cancel</a>
-                <button type="submit" class="button button-primary">+ Add game</button>
+                <a href="<?= $link->url('game.manage') ?>" class="button button-outline">Cancel</a>
+                <button type="submit" class="button button-primary">+ Add Game</button>
             </div>
             </form>
         </div>

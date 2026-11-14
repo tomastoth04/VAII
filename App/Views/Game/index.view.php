@@ -82,9 +82,18 @@
                         </div>
                         <div class="game-card-info"><div>
                             <h3><?= htmlspecialchars($game->getTitle()) ?></h3>
-                            <?php if ($game->getDeveloper()) : ?>
+                            <?php
+                            $genreNames = [];
+                            foreach ($game->getGenreIds() as $genreId) {
+                                $genre = \App\Models\Genre::getOne($genreId);
+                                if ($genre !== null) {
+                                    $genreNames[] = $genre->getName();
+                                }
+                            }
+                            ?>
+                            <?php if ($genreNames) : ?>
                                 <p class="game-meta">
-                                    <?= htmlspecialchars($game->getDeveloper()) ?>
+                                    <?= htmlspecialchars(implode(' · ', $genreNames), ENT_QUOTES, 'UTF-8') ?>
                                 </p>
                             <?php endif; ?>
 
@@ -94,9 +103,9 @@
                                 </p>
                             <?php endif; ?>
                         </div></div>
-                        <?php if ($game->getPublisher()) : ?>
+                        <?php if ($game->getReleaseDate()) : ?>
                             <div class="game-card-footer">
-                                <span><?= htmlspecialchars($game->getPublisher()) ?></span>
+                                <span><?= htmlspecialchars($game->getReleaseDate()) ?></span>
                             </div>
                         <?php endif; ?>
                     </article>

@@ -43,17 +43,4 @@ class HomeController extends BaseController
         $recentGames = Game::getAll(null, [], 'added_at DESC', 4);
         return $this->html(['recentGames' => $recentGames]);
     }
-
-    /**
-     * Displays the contact page.
-     *
-     * This action serves the HTML view for the contact page, which is accessible to all users without any
-     * authorization.
-     *
-     * @return Response The response object containing the rendered HTML for the contact page.
-     */
-    public function contact(Request $request): Response
-    {
-        return $this->html();
-    }
 }

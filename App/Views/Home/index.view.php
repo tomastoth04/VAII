@@ -10,7 +10,7 @@
             <h1 id="hero-title">All your games<br><span class="text-gradient">in one place.</span></h1>
             <p class="hero-description">Discover new worlds, keep track of the games you love, and build your own gaming collection.</p>
             <div class="hero-actions">
-                <a class="button button-primary" href="<?= $link->url('home.games') ?>">Explore the catalog <span aria-hidden="true">→</span></a>
+                <a class="button button-primary" href="<?= $link->url('game.index') ?>">Explore the catalog <span aria-hidden="true">→</span></a>
                 <!--          <a class="button button-outline" href="games.html#library">View my library</a>-->
             </div>
         </div>
@@ -19,7 +19,7 @@
     <section class="section-block" aria-labelledby="recent-title">
         <div class="section-heading">
             <div><p class="eyebrow">RECENTLY ADDED GAMES</p><h2 id="recent-title">Fresh into the Vault</h2></div>
-            <a class="text-link" href="<?= $link->url('home.games') ?>">Browse all games <span aria-hidden="true">→</span></a>
+            <a class="text-link" href="<?= $link->url('game.index') ?>">Browse all games <span aria-hidden="true">→</span></a>
         </div>
 <!--        <div class="game-grid home-game-grid">-->
 <!--            <article class="game-card">-->
@@ -64,9 +64,19 @@
                     <div class="game-card-info">
                         <div>
                             <h3><?= htmlspecialchars($game->getTitle(), ENT_QUOTES, 'UTF-8') ?></h3>
-                            <?php if ($game->getDeveloper()) : ?>
+
+                            <?php
+                            $genreNames = [];
+                            foreach ($game->getGenreIds() as $genreId) {
+                                $genre = \App\Models\Genre::getOne($genreId);
+                                if ($genre !== null) {
+                                    $genreNames[] = $genre->getName();
+                                }
+                            }
+                            ?>
+                            <?php if ($genreNames) : ?>
                                 <p class="game-meta">
-                                    <?= htmlspecialchars($game->getDeveloper(), ENT_QUOTES, 'UTF-8') ?>
+                                    <?= htmlspecialchars(implode(' · ', $genreNames), ENT_QUOTES, 'UTF-8') ?>
                                 </p>
                             <?php endif; ?>
 
@@ -77,9 +87,9 @@
                             <?php endif; ?>
                         </div>
                     </div>
-                    <?php if ($game->getPublisher()) : ?>
+                    <?php if ($game->getDeveloper()) : ?>
                         <div class="game-card-footer">
-                            <span><?= htmlspecialchars($game->getPublisher(), ENT_QUOTES, 'UTF-8') ?></span>
+                            <span><?= htmlspecialchars($game->getDeveloper(), ENT_QUOTES, 'UTF-8') ?></span>
                             <span class="tag">New</span>
                         </div>
                     <?php endif; ?>
@@ -91,7 +101,7 @@
     <section class="section-block" aria-labelledby="top-rated-title">
         <div class="section-heading">
             <div><p class="eyebrow">TOP RATED GAMES</p><h2 id="top-rated-title">Best in the Vault</h2></div>
-            <a class="text-link" href="<?= $link->url('home.games') ?>">Browse all games <span aria-hidden="true">→</span></a>
+            <a class="text-link" href="<?= $link->url('game.index') ?>">Browse all games <span aria-hidden="true">→</span></a>
         </div>
         <div class="game-grid home-game-grid">
             <article class="game-card">
@@ -155,6 +165,6 @@
 
     <section class="cta-panel" id="sign-in" aria-labelledby="cta-title">
         <div><p class="eyebrow">MAKE IT YOURS</p><h2 id="cta-title">Your next favorite game is waiting.</h2><p>Create your personal collection and keep your gaming plans organized.</p></div>
-        <a class="button button-primary" id="register" href="<?= $link->url('home.games') ?>">Get started <span aria-hidden="true">→</span></a>
+        <a class="button button-primary" id="register" href="<?= $link->url('game.index') ?>">Get started <span aria-hidden="true">→</span></a>
     </section>
 </main>

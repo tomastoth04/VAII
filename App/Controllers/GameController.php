@@ -7,6 +7,7 @@ use Framework\Core\BaseController;
 use Framework\Http\HttpException;
 use Framework\Http\Request;
 use Framework\Http\Responses\Response;
+use App\Models\Genre;
 
 class GameController extends BaseController
 {
@@ -18,16 +19,33 @@ class GameController extends BaseController
 
     public function add(Request $request): Response
     {
-        return $this->html(['game' => new Game()]);
+        return $this->html([
+            'game' => new Game(),
+            'genres' => Genre::getAll(),
+            'selectedGenreIds' => []
+        ]);
     }
 
 
     public function edit(Request $request): Response
     {
-        return $this->html(['game' => $this->findGame($request)]);
+        $game = $this->findGame($request);
+
+        return $this->html([
+            'game' => $game,
+            'genres' => Genre::getAll(),
+            'selectedGenreIds' => $game->getGenreIds()
+        ]);
     }
 
-
+    /**
+     * Save a game (either create a new one or update an existing one).
+     * Dôležité je poradie operácií.
+     * Najprv ukladáme hru, pretože až po jej uložení máme jej ID potrebné na vytvorenie záznamov v game_genres.
+     *
+     * @param Request $request The HTTP request object containing form data.
+     * @return Response A redirect response to the game management page.
+     */
     public function save(Request $request): Response
     {
         $game = (int)$request->value('id') > 0
@@ -44,7 +62,19 @@ class GameController extends BaseController
             $game->setAddedAt(date('Y-m-d'));
         }
 
+        // Uloženie hry
         $game->save();
+
+        // Získanie vybraných žánrov z formulára
+        $postData = $request->post();
+        $genreIds = $postData['genres'] ?? [];
+
+        if (!is_array($genreIds)) {
+            $genreIds = [];
+        }
+
+        // Aktualizácia prepojení hry so žánrami
+        $game->syncGenres($genreIds);
 
         return $this->redirect($this->url('game.manage'));
     }
@@ -66,6 +96,7 @@ class GameController extends BaseController
 
     public function delete(Request $request): Response
     {
+        // Ensure that the request is a POST request for deletion, because deletion should not be allowed via GET requests for security reasons.
         if (!$request->isPost()) {
             throw new HttpException(405);
         }

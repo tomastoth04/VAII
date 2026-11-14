@@ -2,6 +2,8 @@
 
 /** @var \App\Models\Game $game */
 /** @var \Framework\Support\LinkGenerator $link */
+/** @var \App\Models\Genre[] $genres */
+/** @var int[] $selectedGenreIds */
 ?>
 
 <main id="main-content" class="page-shell">
@@ -50,9 +52,7 @@
 
                 <div class="game-form-field">
                     <label for="description">Description</label>
-                    <textarea id="description" name="description" rows="5">
-                        <?= htmlspecialchars($game->getDescription() ?? '', ENT_QUOTES, 'UTF-8') ?>
-                    </textarea>
+                    <textarea id="description" name="description" rows="5"><?= htmlspecialchars($game->getDescription() ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
                 </div>
 
                 <div class="game-form-field">
@@ -78,6 +78,24 @@
                     <input type="text" id="cover_image" name="cover_image"
                            value="<?= htmlspecialchars($game->getCoverImage() ?? '', ENT_QUOTES, 'UTF-8') ?>"
                            placeholder="For example, cyberpunk.jpg">
+                </div>
+
+                <div class="game-form-field">
+                    <label>Genres</label>
+                    <div class="genre-checkboxes">
+                        <?php foreach ($genres as $genre): ?>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    name="genres[]"
+                                    value="<?= $genre->getId() ?>"
+                                    <?= in_array($genre->getId(), $selectedGenreIds) ? 'checked' : '' ?>
+                                    <!-- This line checks if the genre is selected and adds the 'checked' attribute accordingly -->
+                                >
+                                <span><?= htmlspecialchars($genre->getName(), ENT_QUOTES, 'UTF-8') ?></span>
+                            </label>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
 
                 <div class="game-form-actions">

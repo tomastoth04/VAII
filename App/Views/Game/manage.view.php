@@ -10,14 +10,14 @@
             <div>
                 <h1 id="manage-games-title">Manage games</h1>
             </div>
-            <a class="button button-primary" href="<?= $link->url('game.add') ?>">+ Add game</a>
+            <a class="button button-primary" href="<?= $link->url('game.add') ?>">+ Add Game</a>
         </div>
 
     <?php if (empty($games)) : ?>
         <section class="section-block">
             <h2>No games found</h2>
             <p class="hero-description">Your catalog is empty. Add the first game to get started.</p>
-            <a class="button button-primary" href="<?= $link->url('game.add') ?>">+ Add game</a>
+            <a class="button button-primary" href="<?= $link->url('game.add') ?>">+ Add Game</a>
         </section>
     <?php else : ?>
         <section aria-labelledby="game-list-title">

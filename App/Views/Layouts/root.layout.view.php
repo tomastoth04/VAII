@@ -62,9 +62,15 @@ $currentAction = $_GET['a'] ?? 'index';
             </a>
 
             <a class="nav-link <?= $currentController === 'game' && $currentAction === 'manage' ? 'active' : '' ?>"
-               href="<?= $link->url('game.manage') ?>"
+                   href="<?= $link->url('game.manage') ?>"
                     <?= $currentController === 'game' && $currentAction === 'manage' ? 'aria-current="page"' : '' ?>>
                 Manage Games
+            </a>
+
+            <a class="nav-link <?= $currentController === 'genre' && $currentAction === 'index' ? 'active' : '' ?>"
+               href="<?= $link->url('genre.index') ?>"
+                    <?= $currentController === 'genre' && $currentAction === 'index' ? 'aria-current="page"' : '' ?>>
+                Manage Genres
             </a>
 
 <!--            <a class="nav-link" aria-disabled="true">My Library</a>-->
