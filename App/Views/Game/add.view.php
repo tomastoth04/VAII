@@ -67,7 +67,6 @@
                                     value="<?= $genre->getId() ?>"
                                     <?= in_array($genre->getId(), $selectedGenreIds) ? 'checked' : '' ?>
                                     <!-- This line checks if the genre is selected and adds the 'checked' attribute accordingly -->
-                                >
                                 <span><?= htmlspecialchars($genre->getName(), ENT_QUOTES, 'UTF-8') ?></span>
                             </label>
                         <?php endforeach; ?>
