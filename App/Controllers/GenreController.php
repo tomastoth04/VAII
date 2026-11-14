@@ -65,4 +65,3 @@ class GenreController extends BaseController
         return $genre;
     }
 }
-

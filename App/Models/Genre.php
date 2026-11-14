@@ -48,4 +48,3 @@ class Genre extends Model
         $this->added_at = $added_at;
     }
 }
-

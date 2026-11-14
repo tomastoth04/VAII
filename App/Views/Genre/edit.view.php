@@ -16,8 +16,8 @@
                 <input type="hidden" name="id" value="<?= $genre->getId() ?>">
 
                 <div class="game-form-field">
-                    <label for="title">Genre name *</label>
-                    <input type="text" id="title" name="title"
+                    <label for="name">Genre name *</label>
+                    <input type="text" id="name" name="name"
                            value="<?= htmlspecialchars($genre->getName(), ENT_QUOTES, 'UTF-8') ?>" required>
                 </div>
 
